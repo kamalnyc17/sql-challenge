@@ -1,42 +1,43 @@
 -- drop tables if extst
-DROP TABLE IF EXISTS department
-DROP TABLE IF EXISTS employee_dept
-DROP TABLE IF EXISTS manager
-DROP TABLE IF EXISTS employee;
-DROP TABLE IF EXISTS salary;
+DROP TABLE IF EXISTS department CASCADE;
+DROP TABLE IF EXISTS employee_dept CASCADE;
+DROP TABLE IF EXISTS manager CASCADE;
+DROP TABLE IF EXISTS salary CASCADE;
+DROP TABLE IF EXISTS employee CASCADE;
 
 -- Create tables
 -- department
 CREATE TABLE department(
 	dept_no VARCHAR(10) PRIMARY KEY,
 	dept_name varchar(50)
-)
+);
 -- employee_dept
 CREATE TABLE employee_dept(
 	emp_no INT,
-	dept_no VARCHAR(10)
-)
+	dept_no VARCHAR(10),
+  	PRIMARY KEY (emp_no, dept_no)
+);
 -- manager
 CREATE TABLE manager(
 	dept_no VARCHAR(10),
-	emp_no INT PRIMARY KEY
-)
+	emp_no INT PRIMARY KEY,
+	FOREIGN KEY (dept_no) REFERENCES department(dept_no)
+);
+-- salary
+CREATE TABLE salary (
+	emp_no INT PRIMARY KEY,
+	salary INT
+);
 -- employee
 CREATE TABLE employee (
-	emp_no INT PRIMARY KEY,
+	emp_no INT NOT NULL PRIMARY KEY,
 	emp_title_id VARCHAR(140),
 	birth_date DATE NOT NULL,
 	first_name VARCHAR(140),
 	last_name VARCHAR(140),
 	sex VARCHAR(10),
 	hire_date DATE NOT NULL
-)
--- salary
-CREATE TABLE salary (
-	emp_no INT PRIMARY KEY,
-	salary INT
-)
-
+);
 -- Queries
 -- 1. List employee number, last name, first name, sex, and salary.
 SELECT e.emp_no, e.last_name, e.first_name, e.sex, s.salary

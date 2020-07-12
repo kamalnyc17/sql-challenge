@@ -5,7 +5,7 @@
 -- Dumped from database version 12.3
 -- Dumped by pg_dump version 12.3
 
--- Started on 2020-07-11 14:58:34
+-- Started on 2020-07-12 07:43:26
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 202 (class 1259 OID 25228)
+-- TOC entry 202 (class 1259 OID 32816)
 -- Name: department; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -36,7 +36,7 @@ CREATE TABLE public.department (
 ALTER TABLE public.department OWNER TO postgres;
 
 --
--- TOC entry 204 (class 1259 OID 25241)
+-- TOC entry 206 (class 1259 OID 32868)
 -- Name: employee; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -54,20 +54,20 @@ CREATE TABLE public.employee (
 ALTER TABLE public.employee OWNER TO postgres;
 
 --
--- TOC entry 206 (class 1259 OID 25251)
+-- TOC entry 203 (class 1259 OID 32821)
 -- Name: employee_dept; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.employee_dept (
-    emp_no integer,
-    dept_no character varying(10)
+    emp_no integer NOT NULL,
+    dept_no character varying(10) NOT NULL
 );
 
 
 ALTER TABLE public.employee_dept OWNER TO postgres;
 
 --
--- TOC entry 203 (class 1259 OID 25236)
+-- TOC entry 204 (class 1259 OID 32826)
 -- Name: manager; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -80,7 +80,7 @@ CREATE TABLE public.manager (
 ALTER TABLE public.manager OWNER TO postgres;
 
 --
--- TOC entry 205 (class 1259 OID 25246)
+-- TOC entry 205 (class 1259 OID 32836)
 -- Name: salary; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -93,7 +93,7 @@ CREATE TABLE public.salary (
 ALTER TABLE public.salary OWNER TO postgres;
 
 --
--- TOC entry 2702 (class 2606 OID 25232)
+-- TOC entry 2702 (class 2606 OID 32820)
 -- Name: department department_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -102,7 +102,16 @@ ALTER TABLE ONLY public.department
 
 
 --
--- TOC entry 2706 (class 2606 OID 25245)
+-- TOC entry 2704 (class 2606 OID 32825)
+-- Name: employee_dept employee_dept_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.employee_dept
+    ADD CONSTRAINT employee_dept_pkey PRIMARY KEY (emp_no, dept_no);
+
+
+--
+-- TOC entry 2710 (class 2606 OID 32872)
 -- Name: employee employee_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -111,7 +120,7 @@ ALTER TABLE ONLY public.employee
 
 
 --
--- TOC entry 2704 (class 2606 OID 25240)
+-- TOC entry 2706 (class 2606 OID 32830)
 -- Name: manager manager_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -120,7 +129,7 @@ ALTER TABLE ONLY public.manager
 
 
 --
--- TOC entry 2708 (class 2606 OID 25250)
+-- TOC entry 2708 (class 2606 OID 32840)
 -- Name: salary salary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -128,7 +137,16 @@ ALTER TABLE ONLY public.salary
     ADD CONSTRAINT salary_pkey PRIMARY KEY (emp_no);
 
 
--- Completed on 2020-07-11 14:58:34
+--
+-- TOC entry 2711 (class 2606 OID 32831)
+-- Name: manager manager_dept_no_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.manager
+    ADD CONSTRAINT manager_dept_no_fkey FOREIGN KEY (dept_no) REFERENCES public.department(dept_no);
+
+
+-- Completed on 2020-07-12 07:43:27
 
 --
 -- PostgreSQL database dump complete
